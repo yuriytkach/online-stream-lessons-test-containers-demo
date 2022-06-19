@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <appender name="CONSOLELOCAL" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <charset>utf-8</charset>
+      <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%level) [%thread] %cyan(%-40.40logger{39}) --- %message --- %yellow(%mdc) %n%rootException</Pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.it" level="DEBUG"/>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLELOCAL"/>
+  </root>
+
+</configuration>

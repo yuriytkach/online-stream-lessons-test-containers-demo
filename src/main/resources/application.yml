@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgres://localhost:5431/items
+    driver-class-name: org.postgresql.Driver
+    type: org.springframework.jdbc.datasource.SimpleDriverDataSource
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    properties.hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: update
