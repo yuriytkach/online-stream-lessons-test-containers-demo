@@ -23,52 +23,50 @@ import io.restassured.http.ContentType;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DemoItApplicationTests {
 
-	@Container
-	static final PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>("postgres:latest")
-		.withDatabaseName("itemsdb")
-		.withUsername("hello")
-		.withPassword("world");
+  @Container
+  static final PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>("postgres:latest")
+    .withDatabaseName("itemsdb")
+    .withUsername("hello")
+    .withPassword("world");
+  @LocalServerPort
+  int localPort;
+  @Autowired
+  ItemRepository itemRepository;
 
-	@DynamicPropertySource
-	static void loadProps(final DynamicPropertyRegistry registry) {
-		System.out.println(CONTAINER.getJdbcUrl());
+  @DynamicPropertySource
+  static void loadProps(final DynamicPropertyRegistry registry) {
+    System.out.println(CONTAINER.getJdbcUrl());
 
-		registry.add("spring.datasource.url", CONTAINER::getJdbcUrl);
-		registry.add("spring.datasource.username", () -> "hello");
-		registry.add("spring.datasource.password", () -> "world");
-	}
+    registry.add("spring.datasource.url", CONTAINER::getJdbcUrl);
+    registry.add("spring.datasource.username", () -> "hello");
+    registry.add("spring.datasource.password", () -> "world");
+  }
 
-	@LocalServerPort
-	int localPort;
+  @BeforeEach
+  void setupRestAssured() {
+    RestAssured.baseURI = "http://localhost";
+    RestAssured.port = localPort;
+  }
 
-	@Autowired
-	ItemRepository itemRepository;
+  @Test
+  void shouldSaveItem() {
+    final var responseBody = RestAssured.given()
+      .contentType(ContentType.JSON)
+      .body(new Item("abc"))
+      .post("/items")
+      .then()
+      .statusCode(HttpStatus.CREATED.value())
+      .body("name", Matchers.equalTo("abc"))
+      .body("id", Matchers.notNullValue())
+      .extract()
+      .body()
+      .asString();
 
-	@BeforeEach
-	void setupRestAssured() {
-		RestAssured.baseURI = "http://localhost";
-		RestAssured.port = localPort;
-	}
+    System.out.println(responseBody);
 
-	@Test
-	void shouldSaveItem() {
-		final var responseBody = RestAssured.given()
-			.contentType(ContentType.JSON)
-			.body(new Item("abc"))
-			.post("/items")
-			.then()
-			.statusCode(HttpStatus.CREATED.value())
-			.body("name", Matchers.equalTo("abc"))
-			.body("id", Matchers.notNullValue())
-			.extract()
-			.body()
-			.asString();
+    final Optional<ItemEntity> byId = itemRepository.findById(1L);
 
-		System.out.println(responseBody);
-
-		final Optional<ItemEntity> byId = itemRepository.findById(1L);
-
-		Assertions.assertTrue(byId.isPresent());
-	}
+    Assertions.assertTrue(byId.isPresent());
+  }
 
 }

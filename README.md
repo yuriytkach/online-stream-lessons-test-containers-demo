@@ -3,6 +3,7 @@
 Demo project for online stream lesson about integration testing and test containers
 
 ### Reference Documentation
+
 For further reference, please consider the following sections:
 
 * [Testcontainers Postgres Module Reference Guide](https://www.testcontainers.org/modules/databases/postgres/)
@@ -10,6 +11,7 @@ For further reference, please consider the following sections:
 * [Testcontainers](https://www.testcontainers.org/)
 
 ### Guides
+
 The following guides illustrate how to use some features concretely:
 
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
