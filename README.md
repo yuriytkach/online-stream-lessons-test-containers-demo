@@ -1,6 +1,16 @@
-# Demo Project for Integration Tests with Test Containers Demo
+# Demo Project for Online Stream #4 - Integration Tests with Test Containers
 
-Demo project for online stream lesson about integration testing and test containers
+Demo project for online stream #4 lesson about integration testing and test containers
+
+## Access to Online Stream on Youtube
+
+To get a link to online stream on Youtube please do the following:
+
+- :moneybag: Make any donation to support my volunteering initiative to help Ukrainian Armed Forces by means described on [my website](https://www.yuriytkach.com/volunteer)
+- :email: Write me an [email](mailto:me@yuriytkach.com) indicating donation amount and time
+- :tv: I will reply with the link to the stream on Youtube.
+
+Thank you in advance for your support! Слава Україні! :ukraine: 
 
 ### Reference Documentation
 
